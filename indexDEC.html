@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+    <!--Structure global de la page-->
+    <html lang = "fr">
+        <!--Contient les données d'entête générales à la page-->
+        <head>
+            <!--Configuration des métas données de la page par rapport à sa sensibilité-->
+            <meta charset = "UTF-8" http-equiv = "X-UA-Compatible" content = "IE=edge"/>
+            <meta name = "viewport" content = "width=device-width, initial-scale=1.0"/>
+            <!--Importation du fichier de style-->
+            <link rel = "stylesheet" href = "./style.css"/>
+            <!--Donnons un titre à notre page-->
+            <title>Accueil</title>
+        </head>
+        <!--Structuration du contenu-->
+        <body>
+            <!--Contenuer général-->
+            <section class = "application">
+                <!--Contient le menu de l'application-->
+                <section class = "menu"></section>
+                <!--Contient les informations et les pages principaux-->
+                <section class = "conteneur-principal">
+                    <!--Contient la page des informations de l'application-->
+                    <div class = "informations"></div>
+                    <!--Contient les pages permettant d'éffectuer les opérations principaux de l'application-->
+                    <div class = "operations"></div>
+                </section>
+            </section>
+            <!--Importation de la librairie jquery-->
+            <script src = "./jquery.js" type = "text/javascript"></script>
+            <!--Le script java ci-dessous est le contrôleur de notre page "indexDEC.html"-->
+            <script type = "text/javascript">
+                // Lorsque la page est entièrement chargée, exécute le code source ci-dessous.
+                window.onload = function () {
+                    // Chargeons par défaut, la page d'inscription d'un joueur.
+                    $ ("div.operations").load ("./inscriptionDEC.html");
+                    // Chargeons par défaut, les informations d'entête de notre application.
+                    $ ("div.informations").load ("./infoDEC.html");
+                    // Chargeons par défaut, le menu de notre application.
+                    $ ("section.menu").load ("./menuDEC.html");
+                }
+            </script>
+        </body>
+    </html>

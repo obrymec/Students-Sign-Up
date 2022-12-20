@@ -1,0 +1,96 @@
+<!--Structuration du contenu-->
+<body align = "center">
+    <!--Conteneur générale-->
+    <div align = "center">
+        <!--Section contenant la recherche de étudiants inscrit dans une option donnée-->
+        <br/><fieldset>
+            <!--Donnons un titre à notre section-->
+            <legend><strong>Rechercher les candidats d'une option</strong></legend>
+            <!--Contient les options disponibles dans la base de données-->
+            <div><label>Filière:</label><br/><select id = "options"></select></div><br/>
+            <!--Bouton permettant la recherche d'étudiants-->
+            <div><input type = "button" id = "bouton_de_recherche" value = "OK"/></div><br/>
+            <!--Tableau contenant la liste des étudiants trouvés-->
+            <label>LISTE DES ETUDIANTS</label><br/>
+            <table align = "center">
+                <thead>
+                    <tr>
+                        <td><strong>NON</strong></td>
+                        <td><strong>PRENOM(S)</strong></td>
+                        <td><strong>SEXE</strong></td>
+                    </tr>
+                </thead>
+                <tbody id = "tbody"></tbody>
+            </table>
+        </fieldset>
+    </div><br/>
+    <!--Importation de la librairie jquery-->
+    <script src = "./jquery.js" type = "text/javascript"></script>
+    <!--Importation de notre script de gestion des requêtes AJAX-->
+    <script src = "./ajax.js" type = "text/javascript"></script>
+    <!--Le script java ci-dessous est le contrôleur de notre page "rechercheDEC.html"-->
+    <script type = "text/javascript">
+        // Récupération de la référence du bouton de recherche de l'étudiant.
+        window.bouton_de_recherche = document.getElementById ("bouton_de_recherche");
+        // Récupération de la référence de la balise <select> contenant les options.
+        window.options = document.getElementById ("options");
+        // Récupération de la référence de la balise contenant la liste des étudiants trouvés.
+        window.tbody = document.getElementById ("tbody");
+
+        // Appelons la méthode "ajax_avec_jquery ()" déjà définie dans notre script "ajax.js"
+        // pour récupérer la liste des filières disponibles dans la base de données.
+        ajax_avec_jquery ("http://localhost:80/students-sign-up/connexion.php", new Object ({operation: "recuperer_options"}), function (donnees) {
+            // Ajoutons chaque donnée récupérée de la base de données.
+            for (let foption of donnees.options) {
+                // Création d'une balise option qui représentera une option donnée.
+                let option = document.createElement ("option");
+                // Changement de la valeur de l'option.
+                option.innerHTML = foption.codeopt;
+                // Récupération de l'identifiant de l'option en question.
+                option.value = foption.codeopt;
+                // Ajoutons cette option à notre sélecteur d'option.
+                options.appendChild (option);
+            }
+        });
+        // Ecoutons l'événement de "click" sur le bouton de validation pour faire nos opérations.
+        bouton_de_recherche.addEventListener ("click", function () {
+            // Vérification de l'option choisie.
+            if (options.value.trim ().length) {
+                // Récupération des données éssentielles du formulaire.
+                const donnees_du_formulaire = new Object ({
+                    // Contient l'opération à effectuer.
+                    operation: "rechercher_des_etudiants",
+                    // Récupération de l'option choisie.
+                    codeopt: options.value
+                });
+                // Appelons la méthode "ajax_avec_jquery ()" définie dans notre script "ajax.js"
+                // pour transmettre les données du formulaire à notre script "connexion.php".
+                ajax_avec_jquery ("http://localhost:80/students-sign-up/connexion.php", donnees_du_formulaire, function (donnees) {
+                    // Suppression des anciennes recherches misent dans le tableau.
+                    tbody.innerHTML = '';
+                    // Ajoutons le(s) étudiant(s) trouvé(s) dans l'interface graphique.
+                    for (let etudiant of donnees.etudiants) {
+                        // Creation d'une balise <tr> pour représenter les données associées à un étudiant donné.
+                        let tr = document.createElement ("tr");
+                        // Modifions la structure HTML de la balise que nous venons de créer.
+                        tr.innerHTML = `
+                            <td>${etudiant.nom}</td>
+                            <td>${etudiant.prenom}</td>
+                            <td>${etudiant.sexe}</td>
+                        `;
+                        // Ajoutons ce propriétaire à notre tableau.
+                        tbody.appendChild (tr);
+                    }
+                // En cas d'erreur, affichons le message d'erreur ainsi détecté.
+                }, function (status) {
+                    // Affiche le message d'erreur dans la console du navigateur.
+                    console.error (status);
+                });
+            // Avertir l'utilisateur sur la non précision de l'option.
+            } else {
+                // Prévenons l'utilisateur sur cette erreur avec la boîte de dialogue du navigateur.
+                alert ("Indiquez l'option svp !");
+            }
+        });
+    </script>
+</body>

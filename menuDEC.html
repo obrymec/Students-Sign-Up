@@ -1,0 +1,25 @@
+<!--Structuration du contenu-->
+<body>
+    <!--Contient le titre de notre menu-->
+    <label>MENU GENERAL</label>
+    <!--Liste contenant les options disponibles-->
+    <ol>
+        <li><a href = "#" id = "inscription">Inscription</a></li>
+        <li><a href = "#" id = "recherche">Liste des étudiants</a></li>
+    </ol>
+    <!--Importation de la librairie jquery-->
+    <script src = "./jquery.js" type = "text/javascript"></script>
+    <!--Le script java ci-dessous est le contrôleur de notre page "menuDEC.html"-->
+    <script type = "text/javascript">
+        // Ecoutons un événement de "click" sur le lien chargé d'ouvrir la page d'inscription.
+        document.getElementById ("inscription").addEventListener ("click", function () {
+            // Chargeons la page d'inscription.
+            $ ("div.operations").load ("./inscriptionDEC.html");
+        });
+        // Ecoutons un événement de "click" sur le lien chargé d'ouvrir la page de recherche de joueurs.
+        document.getElementById ("recherche").addEventListener ("click", function () {
+            // Chargeons la page de recherche de joueurs.
+            $ ("div.operations").load ("./rechercheDEC.html");
+        });
+    </script>
+</body>
