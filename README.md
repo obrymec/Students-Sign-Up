@@ -45,6 +45,6 @@ Now you are ready to run the project.
 To navigate between project views, you can uses the following below links:
 - http://localhost/students-sign-up/indexDEC.html
 
-<u><strong>NB</strong></u>: Make sure that the project folder name is: <i><strong>students-sign-up</i></strong>
+<u><strong>Pay Attention</strong></u>: Make sure that the project folder name is: <i><strong>students-sign-up</i></strong>
 
 Enjoy :)
